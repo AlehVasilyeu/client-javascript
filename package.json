@@ -25,7 +25,10 @@
     "node": ">= 7.0.x"
   },
   "dependencies": {
-    "restler": "3.4.0",
+    "axios": "0.18.0",
+    "axios-retry-interceptor": "1.1.0",
+    "easy-promise-queue": "0.5.4",
+    "loglevel": "1.6.1",
     "uniqid": "4.1.1"
   },
   "license": "GPL-3.0",
@@ -36,11 +39,13 @@
   },
   "devDependencies": {
     "codecov": "3.1.0",
-    "nyc": "13.0.1",
-    "jasmine": "2.6.0",
     "eslint": "4.19.1",
     "eslint-config-airbnb-base": "12.1.0",
     "eslint-plugin-import": "2.14.0",
-    "eslint-plugin-node": "5.2.1"
+    "eslint-plugin-node": "5.2.1",
+    "jasmine": "3.3.1",
+    "lodash": "4.17.11",
+    "nock": "10.0.6",
+    "nyc": "13.0.1"
   }
 }
