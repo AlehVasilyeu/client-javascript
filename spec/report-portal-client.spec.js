@@ -184,8 +184,41 @@ describe('ReportPortal javascript client', () => {
 
 
         // add the same way to tree
+        // setting launch data, like existing one.
+        client.tree.items[TEMP_LAUNCH_ID] = {
+            id: TEMP_LAUNCH_ID,
+            realId: REAL_LAUNCH_ID,
+            childrens: [TEMP_SUITE_ID],
+            finishSend: false,
+            active: false,
+        };
 
-        // client.tree.items
+        // add suite to launch
+        client.tree.items[TEMP_SUITE_ID] = {
+            id: TEMP_SUITE_ID,
+            realId: REAL_SUITE_ID,
+            childrens: [TEMP_STEP_ID],
+            finishSend: false,
+            active: false,
+        };
+
+        // add step to suite
+        client.tree.items[TEMP_STEP_ID] = {
+            id: TEMP_STEP_ID,
+            realId: REAL_STEP_ID,
+            childrens: [TEMP_LOG_ID],
+            finishSend: false,
+            active: false,
+        };
+
+        // add log to step
+        client.tree.items[TEMP_LOG_ID] = {
+            id: TEMP_LOG_ID,
+            realId: REAL_LOG_ID,
+            childrens: [],
+            finishSend: true,
+            active: false,
+        };
     });
 
     afterEach(() => {
@@ -328,8 +361,6 @@ describe('ReportPortal javascript client', () => {
             client.startLaunch(launchData).promise.then((result) => {
                 expect(result).toEqual(response);
                 expect(scope.isDone()).toBeTruthy();
-
-                console.dir(client.tree.items);
 
                 done();
             });
