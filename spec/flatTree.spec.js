@@ -6,8 +6,8 @@ describe('Tree', () => {
         it('creates object with with empty tree', () => {
             const tree = new Tree();
 
-            expect(typeof tree.tree === 'object').toBeTruthy();
-            expect(Object.keys(tree.tree).length).toEqual(0);
+            expect(typeof tree.items === 'object').toBeTruthy();
+            expect(Object.keys(tree.items).length).toEqual(0);
         });
     });
 
@@ -19,7 +19,7 @@ describe('Tree', () => {
                 data: 'Item',
                 children: ['321'],
             };
-            tree.tree['123'] = item;
+            tree.items['123'] = item;
 
             expect(tree.getItem('123')).toEqual(item);
         });
@@ -88,7 +88,7 @@ describe('Tree', () => {
             expect(addedItem.children.length).toEqual(0);
             expect(addedItem.data).toEqual(item.data);
 
-            expect(tree.tree[addedItem.id]).toEqual(addedItem);
+            expect(tree.items[addedItem.id]).toEqual(addedItem);
         });
 
         it('puts new item under parent', () => {
@@ -102,12 +102,12 @@ describe('Tree', () => {
             const addedParentItem = tree.addItem(parentItem);
             const addedItem = tree.addItem(item, addedParentItem.id);
 
-            expect(tree.tree[addedItem.id]).toEqual(addedItem);
-            expect(tree.tree[addedItem.id].children.length).toEqual(0);
+            expect(tree.items[addedItem.id]).toEqual(addedItem);
+            expect(tree.items[addedItem.id].children.length).toEqual(0);
 
-            expect(tree.tree[addedParentItem.id]).toEqual(parentItem);
-            expect(tree.tree[addedParentItem.id].children.length).toEqual(1);
-            expect(tree.tree[addedParentItem.id].children).toContain(addedItem.id);
+            expect(tree.items[addedParentItem.id]).toEqual(parentItem);
+            expect(tree.items[addedParentItem.id].children.length).toEqual(1);
+            expect(tree.items[addedParentItem.id].children).toContain(addedItem.id);
         });
 
         it('throws error if item undefined', () => {
