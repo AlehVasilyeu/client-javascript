@@ -193,6 +193,8 @@ describe('ReportPortal javascript client', () => {
             // const client = new RPClient({ token: 'test' });
             const customClient = new RPClient(config);
 
+            expect(Object.keys(customClient.map).length).toEqual(0);
+            expect(Object.keys(customClient.tree.tree).length).toEqual(0);
             expect(customClient.config.token).toBe(config.token);
             expect(customClient.debug).toBe(false);
             expect(customClient.baseURL).toBe(config.endpoint);
