@@ -45,7 +45,7 @@ Promise.resolve()
     })
     // add suites to existing launch
     .then(() => {
-        for (let i = 0; i < 1; i += 1) {
+        for (let i = 0; i < 5; i += 1) {
             const suiteObj = rpClient.startTestItem(
                 {
                     description: uniqid(),
@@ -62,7 +62,7 @@ Promise.resolve()
     // add steps to suites
     .then(() => {
         tempSuiteIds.forEach((tempSuiteId) => {
-            for (let i = 0; i < 2; i += 1) {
+            for (let i = 0; i < 10; i += 1) {
                 const stepObj = rpClient.startTestItem(
                     {
                         description: uniqid(),
@@ -81,7 +81,7 @@ Promise.resolve()
     // add logs and attachments to the steps
     .then(() => {
         tempStepIds.forEach((tempStepId) => {
-            for (let i = 0; i < 1; i += 1) {
+            for (let i = 0; i < 2; i += 1) {
                 rpClient.sendLog(
                     tempStepId,
                     {
