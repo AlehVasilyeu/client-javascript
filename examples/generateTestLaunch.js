@@ -45,38 +45,38 @@ Promise.resolve()
     })
     // add suites to existing launch
     .then(() => {
-        // for (let i = 0; i < 5; i += 1) {
-        //     const suiteObj = rpClient.startTestItem(
-        //         {
-        //             description: uniqid(),
-        //             name: uniqid(),
-        //             start_time: rpClient.helpers.now(),
-        //             type: 'SUITE',
-        //         },
-        //         launchObj.tempId,
-        //     );
-        //     tempSuiteIds.push(suiteObj.tempId);
-        // }
-        // return rpClient.getPromiseFinishAllItems(launchObj.tempId);
+        for (let i = 0; i < 5; i += 1) {
+            const suiteObj = rpClient.startTestItem(
+                {
+                    description: uniqid(),
+                    name: uniqid(),
+                    start_time: rpClient.helpers.now(),
+                    type: 'SUITE',
+                },
+                launchObj.tempId,
+            );
+            tempSuiteIds.push(suiteObj.tempId);
+        }
+        return rpClient.getPromiseFinishAllItems(launchObj.tempId);
     })
     // add steps to suites
     .then(() => {
-        // tempSuiteIds.forEach((tempSuiteId) => {
-        //     for (let i = 0; i < 10; i += 1) {
-        //         const stepObj = rpClient.startTestItem(
-        //             {
-        //                 description: uniqid(),
-        //                 name: uniqid(),
-        //                 start_time: rpClient.helpers.now(),
-        //                 type: 'STEP',
-        //             },
-        //             launchObj.tempId,
-        //             tempSuiteId,
-        //         );
-        //         tempStepIds.push(stepObj.tempId);
-        //     }
-        // });
-        // return rpClient.getPromiseFinishAllItems(launchObj.tempId);
+        tempSuiteIds.forEach((tempSuiteId) => {
+            for (let i = 0; i < 10; i += 1) {
+                const stepObj = rpClient.startTestItem(
+                    {
+                        description: uniqid(),
+                        name: uniqid(),
+                        start_time: rpClient.helpers.now(),
+                        type: 'STEP',
+                    },
+                    launchObj.tempId,
+                    tempSuiteId,
+                );
+                tempStepIds.push(stepObj.tempId);
+            }
+        });
+        return rpClient.getPromiseFinishAllItems(launchObj.tempId);
     })
     // add logs and attachments to the steps
     .then(() => {
@@ -109,24 +109,24 @@ Promise.resolve()
     })
     // mark as failed all steps
     .then(() => {
-        // tempStepIds.map(tempStepId =>
-        //     rpClient.finishTestItem(
-        //         tempStepId,
-        //         {
-        //             end_time: rpClient.helpers.now(),
-        //             status: 'failed',
-        //         },
-        //     ).promise);
+        tempStepIds.map(tempStepId =>
+            rpClient.finishTestItem(
+                tempStepId,
+                {
+                    end_time: rpClient.helpers.now(),
+                    status: 'failed',
+                },
+            ).promise);
     })
     // // mark as passed all suites, only in that order
     .then(() => {
-        // tempSuiteIds.map(tempSuiteId => rpClient.finishTestItem(
-        //     tempSuiteId,
-        //     {
-        //         end_time: rpClient.helpers.now(),
-        //         status: 'passed',
-        //     },
-        // ).promise);
+        tempSuiteIds.map(tempSuiteId => rpClient.finishTestItem(
+            tempSuiteId,
+            {
+                end_time: rpClient.helpers.now(),
+                status: 'passed',
+            },
+        ).promise);
     })
     // finish launch
     .then(() => rpClient.finishLaunch(
