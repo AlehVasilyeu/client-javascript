@@ -82,27 +82,27 @@ Promise.resolve()
     .then(() => {
         tempStepIds.forEach((tempStepId) => {
             for (let i = 0; i < 2; i += 1) {
-                // rpClient.sendLog(
-                //     tempStepId,
-                //     {
-                //         level: 'INFO',
-                //         message: uniqid(),
-                //         time: rpClient.helpers.now(),
-                //     },
-                // );
-                // rpClient.sendLogWithFile(
-                //     tempStepId,
-                //     {
-                //         level: 'INFO',
-                //         message: uniqid(),
-                //         time: rpClient.helpers.now(),
-                //     },
-                //     {
-                //         name: uniqid(),
-                //         type: 'image/png',
-                //         content: screenshot,
-                //     },
-                // );
+                rpClient.sendLog(
+                    tempStepId,
+                    {
+                        level: 'INFO',
+                        message: uniqid(),
+                        time: rpClient.helpers.now(),
+                    },
+                );
+                rpClient.sendLogWithFile(
+                    tempStepId,
+                    {
+                        level: 'INFO',
+                        message: uniqid(),
+                        time: rpClient.helpers.now(),
+                    },
+                    {
+                        name: uniqid(),
+                        type: 'image/png',
+                        content: screenshot,
+                    },
+                );
             }
         });
         // return rpClient.getPromiseFinishAllItems(launchObj.tempId);
