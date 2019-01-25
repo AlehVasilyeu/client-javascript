@@ -152,44 +152,12 @@ describe('ReportPortal javascript client', () => {
 
     beforeEach(() => {
         client = new RPClient(config);
-        // client.map = {};
-
-        // // setting launch data, like existing one.
-        // client.map[TEMP_LAUNCH_ID] = {
-        //     realId: REAL_LAUNCH_ID,
-        //     childrens: [TEMP_SUITE_ID],
-        //     finishSend: false,
-        // };
-
-        // // add suite to launch
-        // client.map[TEMP_SUITE_ID] = {
-        //     realId: REAL_SUITE_ID,
-        //     childrens: [TEMP_STEP_ID],
-        //     finishSend: false,
-        // };
-
-        // // add step to suite
-        // client.map[TEMP_STEP_ID] = {
-        //     realId: REAL_STEP_ID,
-        //     childrens: [TEMP_LOG_ID],
-        //     finishSend: false,
-        // };
-
-        // // add log to step
-        // client.map[TEMP_LOG_ID] = {
-        //     realId: REAL_LOG_ID,
-        //     childrens: [],
-        //     finishSend: true,
-        // };
-
-
         // add the same way to tree
         // setting launch data, like existing one.
         client.tree.items[TEMP_LAUNCH_ID] = {
             id: TEMP_LAUNCH_ID,
             realId: REAL_LAUNCH_ID,
             children: [TEMP_SUITE_ID],
-            childrens: [TEMP_SUITE_ID], // todo drop it
             finishSend: false,
             active: false,
         };
@@ -199,7 +167,6 @@ describe('ReportPortal javascript client', () => {
             id: TEMP_SUITE_ID,
             realId: REAL_SUITE_ID,
             children: [TEMP_STEP_ID],
-            childrens: [TEMP_STEP_ID], // todo drop it
             finishSend: false,
             active: false,
         };
@@ -209,7 +176,6 @@ describe('ReportPortal javascript client', () => {
             id: TEMP_STEP_ID,
             realId: REAL_STEP_ID,
             children: [TEMP_LOG_ID],
-            childrens: [TEMP_LOG_ID], // todo drop it
             finishSend: false,
             active: false,
         };
@@ -219,7 +185,6 @@ describe('ReportPortal javascript client', () => {
             id: TEMP_LOG_ID,
             realId: REAL_LOG_ID,
             children: [],
-            childrens: [], // todo drop it
             finishSend: true,
             active: false,
         };
@@ -231,11 +196,8 @@ describe('ReportPortal javascript client', () => {
 
     describe('constructor', () => {
         it('creates object with correct properties', () => {
-            // map is empty
-            // const client = new RPClient({ token: 'test' });
             const customClient = new RPClient(config);
 
-            expect(Object.keys(customClient.map).length).toEqual(0);
             expect(Object.keys(customClient.tree.items).length).toEqual(0);
             expect(customClient.config.token).toBe(config.token);
             expect(customClient.debug).toBe(false);
@@ -293,9 +255,9 @@ describe('ReportPortal javascript client', () => {
         it('returns new clean object for requests every time', () => {
             const expectedItemObj = {
                 realId: null,
-                childrens: [],
+                children: [],
                 finishSend: false,
-                active: false,
+                active: true,
             };
 
             const newItemObj = client.getNewItemObj();
@@ -304,7 +266,7 @@ describe('ReportPortal javascript client', () => {
         });
     });
 
-    describe('#cleanMap', () => {
+    xdescribe('#cleanMap', () => {
         it('removes all specified items from "map"', () => {
             client.cleanMap([
                 TEMP_LAUNCH_ID,
