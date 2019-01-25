@@ -151,4 +151,50 @@ describe('Tree', () => {
                 .toThrowError(Error, `There is no such parent element with id ${parentId}`);
         });
     });
+
+    describe('#addChild', () => {
+        it('puts item under parent item', () => {
+            const tree = new Tree();
+            const parentItem = {
+                data: 'Parent',
+            };
+            const item1 = {
+                data: 'Item 1',
+            };
+            const item2 = {
+                data: 'Item 2',
+            };
+
+            const addedParent = tree.addItem(parentItem);
+            const addedItem1 = tree.addItem(item1);
+            tree.addChild(item1, addedParent.id);
+            const addedItem2 = tree.addItem(item2);
+            tree.addChild(item2, addedParent.id);
+
+            expect(tree.getChildren(addedParent.id)).toEqual([addedItem1, addedItem2]);
+        });
+    });
+
+    describe('#removeAllChildren', () => {
+        it('removes all children of item', () => {
+            const tree = new Tree();
+            const parentItem = {
+                data: 'Parent',
+            };
+            const item1 = {
+                data: 'Item 1',
+            };
+            const item2 = {
+                data: 'Item 2',
+            };
+
+            const addedParent = tree.addItem(parentItem);
+            tree.addItem(item1, addedParent.id);
+            tree.addItem(item2, addedParent.id);
+
+            tree.removeAllChildren(parentItem.id);
+
+            expect(tree.getChildren(addedParent.id)).toEqual([]);
+        });
+    });
 });
