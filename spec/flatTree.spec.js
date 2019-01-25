@@ -110,6 +110,27 @@ describe('Tree', () => {
             expect(tree.items[addedParentItem.id].children).toContain(addedItem.id);
         });
 
+        it('puts existing item under parent', () => {
+            const tree = new Tree();
+            const parentItem = {
+                data: 'Parent',
+            };
+            const item = {
+                data: 'Item',
+            };
+            const addedParentItem = tree.addItem(parentItem);
+            const addedItem = tree.addItem(item);
+
+            tree.addItem(addedItem, parentItem.id);
+
+            expect(tree.items[addedItem.id]).toEqual(addedItem);
+            expect(tree.items[addedItem.id].children.length).toEqual(0);
+
+            expect(tree.items[addedParentItem.id]).toEqual(parentItem);
+            expect(tree.items[addedParentItem.id].children.length).toEqual(1);
+            expect(tree.items[addedParentItem.id].children).toContain(addedItem.id);
+        });
+
         it('throws error if item undefined', () => {
             const tree = new Tree();
 
