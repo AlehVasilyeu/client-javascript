@@ -304,7 +304,7 @@ describe('ReportPortal javascript client', () => {
         });
     });
 
-    xdescribe('#cleanMap', () => {
+    describe('#cleanMap', () => {
         it('removes all specified items from "map"', () => {
             client.cleanMap([
                 TEMP_LAUNCH_ID,
@@ -726,7 +726,7 @@ describe('ReportPortal javascript client', () => {
         });
     });
 
-    xdescribe('#saveLog', () => {
+    describe('#saveLog', () => {
         it('returns object with promise and tempId', (done) => {
             const logItemObject = client.saveLog(TEMP_STEP_ID, () => Promise.resolve());
             // todo check that old tempId is returned
@@ -767,7 +767,7 @@ describe('ReportPortal javascript client', () => {
         });
     });
 
-    xdescribe('#sendLog', () => {
+    describe('#sendLog', () => {
         it('calls #sendLogWithoutFile', () => {
             spyOn(client, 'sendLogWithoutFile');
 
@@ -794,7 +794,7 @@ describe('ReportPortal javascript client', () => {
         });
     });
 
-    xdescribe('#sendLogWithoutFile', () => {
+    describe('#sendLogWithoutFile', () => {
         it('returns object with promise and tempId', (done) => {
             const logItemObject = client.sendLogWithoutFile(
                 TEMP_STEP_ID,
@@ -839,7 +839,7 @@ describe('ReportPortal javascript client', () => {
         });
     });
 
-    xdescribe('#sendLogWithFile', () => {
+    describe('#sendLogWithFile', () => {
         it('returns object with promise and tempId', (done) => {
             const logItemObject = client.sendLogWithFile(
                 TEMP_STEP_ID,
@@ -887,7 +887,7 @@ describe('ReportPortal javascript client', () => {
         });
     });
 
-    xdescribe('#getRequestLogWithFile', () => {
+    describe('#getRequestLogWithFile', () => {
         it('returns promise', (done) => {
             const promise = client.getRequestLogWithFile(
                 LOG_MESSAGE,
