@@ -43,18 +43,18 @@ Promise.resolve()
     })
     // add suites to existing launch
     .then(() => {
-        // for (let i = 0; i < 20; i += 1) {
-        //     const suiteObj = rpClient.startTestItem(
-        //         {
-        //             description: uniqid(),
-        //             name: uniqid(),
-        //             start_time: rpClient.helpers.now(),
-        //             type: 'SUITE',
-        //         },
-        //         launchObj.tempId,
-        //     );
-        //     tempSuiteIds.push(suiteObj.tempId);
-        // }
+        for (let i = 0; i < 20; i += 1) {
+            const suiteObj = rpClient.startTestItem(
+                {
+                    description: uniqid(),
+                    name: uniqid(),
+                    start_time: rpClient.helpers.now(),
+                    type: 'SUITE',
+                },
+                launchObj.tempId,
+            );
+            tempSuiteIds.push(suiteObj.tempId);
+        }
         // return rpClient.getPromiseFinishAllItems(launchObj.tempId);
     })
     // add steps to suites
