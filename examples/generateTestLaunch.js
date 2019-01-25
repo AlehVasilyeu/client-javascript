@@ -21,6 +21,8 @@ const tempStepIds = [];
 // concurrency to higher value, but in this case you will need to store promises to resolve
 // them in appropriate way.
 
+const startTime = Date.now().valueOf();
+
 const launchObj = rpClient.startLaunch({
     name: 'Client test',
     start_time: rpClient.helpers.now(),
@@ -43,7 +45,7 @@ Promise.resolve()
     })
     // add suites to existing launch
     .then(() => {
-        for (let i = 0; i < 2; i += 1) {
+        for (let i = 0; i < 1; i += 1) {
             const suiteObj = rpClient.startTestItem(
                 {
                     description: uniqid(),
@@ -60,7 +62,7 @@ Promise.resolve()
     // add steps to suites
     .then(() => {
         tempSuiteIds.forEach((tempSuiteId) => {
-            for (let i = 0; i < 5; i += 1) {
+            for (let i = 0; i < 2; i += 1) {
                 const stepObj = rpClient.startTestItem(
                     {
                         description: uniqid(),
@@ -77,59 +79,61 @@ Promise.resolve()
         // return rpClient.getPromiseFinishAllItems(launchObj.tempId);
     })
     // add logs and attachments to the steps
-    // .then(() => {
-    //     tempStepIds.forEach((tempStepId) => {
-    //         for (let i = 0; i < 2; i += 1) {
-    //             rpClient.sendLog(
-    //                 tempStepId,
-    //                 {
-    //                     level: 'INFO',
-    //                     message: uniqid(),
-    //                     time: rpClient.helpers.now(),
-    //                 },
-    //             );
-    //             rpClient.sendLogWithFile(
-    //                 tempStepId,
-    //                 {
-    //                     level: 'INFO',
-    //                     message: uniqid(),
-    //                     time: rpClient.helpers.now(),
-    //                 },
-    //                 {
-    //                     name: uniqid(),
-    //                     type: 'image/png',
-    //                     content: screenshot,
-    //                 },
-    //             );
-    //         }
-    //     });
-    //     return rpClient.getPromiseFinishAllItems(launchObj.tempId);
-    // })
+    .then(() => {
+        tempStepIds.forEach((tempStepId) => {
+            for (let i = 0; i < 2; i += 1) {
+                rpClient.sendLog(
+                    tempStepId,
+                    {
+                        level: 'INFO',
+                        message: uniqid(),
+                        time: rpClient.helpers.now(),
+                    },
+                );
+                rpClient.sendLogWithFile(
+                    tempStepId,
+                    {
+                        level: 'INFO',
+                        message: uniqid(),
+                        time: rpClient.helpers.now(),
+                    },
+                    {
+                        name: uniqid(),
+                        type: 'image/png',
+                        content: screenshot,
+                    },
+                );
+            }
+        });
+        // return rpClient.getPromiseFinishAllItems(launchObj.tempId);
+    })
     // mark as failed all steps
-    .then(() => {
-        tempStepIds.map(tempStepId =>
-            rpClient.finishTestItem(
-                tempStepId,
-                {
-                    end_time: rpClient.helpers.now(),
-                    status: 'failed',
-                },
-            ).promise);
-    })
-    // mark as passed all suites, only in that order
-    .then(() => {
-        tempSuiteIds.map(tempSuiteId => rpClient.finishTestItem(
-            tempSuiteId,
-            {
-                end_time: rpClient.helpers.now(),
-                status: 'passed',
-            },
-        ).promise);
-    })
+    // .then(() => {
+    //     tempStepIds.map(tempStepId =>
+    //         rpClient.finishTestItem(
+    //             tempStepId,
+    //             {
+    //                 end_time: rpClient.helpers.now(),
+    //                 status: 'failed',
+    //             },
+    //         ).promise);
+    // })
+    // // mark as passed all suites, only in that order
+    // .then(() => {
+    //     tempSuiteIds.map(tempSuiteId => rpClient.finishTestItem(
+    //         tempSuiteId,
+    //         {
+    //             end_time: rpClient.helpers.now(),
+    //             status: 'passed',
+    //         },
+    //     ).promise);
+    // })
     // finish launch
     .then(() => rpClient.finishLaunch(
         launchObj.tempId,
         {
             end_time: rpClient.helpers.now(),
         },
-    ).promise);
+    ).promise.then(() => {
+        console.log('took', Date.now().valueOf() - startTime);
+    }));
