@@ -152,35 +152,35 @@ describe('ReportPortal javascript client', () => {
 
     beforeEach(() => {
         client = new RPClient(config);
-        client.map = {};
+        // client.map = {};
 
-        // setting launch data, like existing one.
-        client.map[TEMP_LAUNCH_ID] = {
-            realId: REAL_LAUNCH_ID,
-            childrens: [TEMP_SUITE_ID],
-            finishSend: false,
-        };
+        // // setting launch data, like existing one.
+        // client.map[TEMP_LAUNCH_ID] = {
+        //     realId: REAL_LAUNCH_ID,
+        //     childrens: [TEMP_SUITE_ID],
+        //     finishSend: false,
+        // };
 
-        // add suite to launch
-        client.map[TEMP_SUITE_ID] = {
-            realId: REAL_SUITE_ID,
-            childrens: [TEMP_STEP_ID],
-            finishSend: false,
-        };
+        // // add suite to launch
+        // client.map[TEMP_SUITE_ID] = {
+        //     realId: REAL_SUITE_ID,
+        //     childrens: [TEMP_STEP_ID],
+        //     finishSend: false,
+        // };
 
-        // add step to suite
-        client.map[TEMP_STEP_ID] = {
-            realId: REAL_STEP_ID,
-            childrens: [TEMP_LOG_ID],
-            finishSend: false,
-        };
+        // // add step to suite
+        // client.map[TEMP_STEP_ID] = {
+        //     realId: REAL_STEP_ID,
+        //     childrens: [TEMP_LOG_ID],
+        //     finishSend: false,
+        // };
 
-        // add log to step
-        client.map[TEMP_LOG_ID] = {
-            realId: REAL_LOG_ID,
-            childrens: [],
-            finishSend: true,
-        };
+        // // add log to step
+        // client.map[TEMP_LOG_ID] = {
+        //     realId: REAL_LOG_ID,
+        //     childrens: [],
+        //     finishSend: true,
+        // };
 
 
         // add the same way to tree
@@ -382,7 +382,7 @@ describe('ReportPortal javascript client', () => {
         });
     });
 
-    xdescribe('#updateLaunch', () => {
+    describe('#updateLaunch', () => {
         it('returns object with promise and tempId', (done) => {
             const launchObject = client.updateLaunch(TEMP_LAUNCH_ID, {});
 
@@ -419,7 +419,7 @@ describe('ReportPortal javascript client', () => {
         });
 
         it('rejects promise with error if launch doesnt have realId', (done) => {
-            client.map[TEMP_LAUNCH_ID].realId = null;
+            client.tree.getItem(TEMP_LAUNCH_ID).realId = null;
 
             client.updateLaunch(TEMP_LAUNCH_ID).promise.catch((error) => {
                 expect(error instanceof Error).toBeTruthy();
