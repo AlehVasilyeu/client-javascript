@@ -444,7 +444,7 @@ describe('ReportPortal javascript client', () => {
         });
     });
 
-    xdescribe('#finishLaunch', () => {
+    describe('#finishLaunch', () => {
         it('returns object with promise and tempId', (done) => {
             const launchObject = client.finishLaunch(TEMP_LAUNCH_ID);
 
@@ -482,7 +482,7 @@ describe('ReportPortal javascript client', () => {
         });
 
         it('rejects promise with error if launch doesnt have reaId', (done) => {
-            client.map[TEMP_LAUNCH_ID].realId = null;
+            client.tree.getItem(TEMP_LAUNCH_ID).realId = null;
 
             client.finishLaunch(TEMP_LAUNCH_ID).promise.catch((error) => {
                 expect(error instanceof Error).toBeTruthy();
