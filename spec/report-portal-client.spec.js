@@ -945,7 +945,7 @@ describe('ReportPortal javascript client', () => {
         });
     });
 
-    xdescribe('#buildMultiPartStream', () => {
+    describe('#buildMultiPartStream', () => {
         // add check for authorization header in requests...
         it('returns new Buffer for composed stream json + file', () => {
             const buffer = client.buildMultiPartStream(
@@ -957,13 +957,5 @@ describe('ReportPortal javascript client', () => {
             expect(buffer).toBeDefined();
             expect(buffer instanceof Buffer).toBeTruthy();
         });
-    });
-
-    xdescribe('OPTIONS', () => {
-        // todo
-    });
-
-    xdescribe('concurrency', () => {
-
     });
 });
