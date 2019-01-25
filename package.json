@@ -33,7 +33,7 @@
   },
   "license": "GPL-3.0",
   "scripts": {
-    "lint": "eslint . --quiet",
+    "lint": "eslint .",
     "test": "nyc ./node_modules/jasmine/bin/jasmine.js",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov"
   },
