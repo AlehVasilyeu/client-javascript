@@ -40,8 +40,6 @@ Promise.resolve()
             description: 'test description',
             tags: ['test', 'tag'],
         });
-        // we are waiting till all are actions completed
-        // return rpClient.getPromiseFinishAllItems(launchObj.tempId);
     })
     // add suites to existing launch
     .then(() => {
@@ -57,7 +55,6 @@ Promise.resolve()
             );
             tempSuiteIds.push(suiteObj.tempId);
         }
-        return rpClient.getPromiseFinishAllItems(launchObj.tempId);
     })
     // add steps to suites
     .then(() => {
@@ -76,7 +73,6 @@ Promise.resolve()
                 tempStepIds.push(stepObj.tempId);
             }
         });
-        return rpClient.getPromiseFinishAllItems(launchObj.tempId);
     })
     // add logs and attachments to the steps
     .then(() => {
@@ -105,7 +101,6 @@ Promise.resolve()
                 );
             }
         });
-        // return rpClient.getPromiseFinishAllItems(launchObj.tempId);
     })
     // mark as failed all steps
     .then(() => {
@@ -135,5 +130,6 @@ Promise.resolve()
             end_time: rpClient.helpers.now(),
         },
     ).promise.then(() => {
-        console.log('took', Date.now().valueOf() - startTime);
+        // eslint-disable-next-line no-console
+        console.log('Execution took: ', Date.now().valueOf() - startTime);
     }));
