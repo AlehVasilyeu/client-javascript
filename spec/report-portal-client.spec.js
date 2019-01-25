@@ -507,7 +507,7 @@ describe('ReportPortal javascript client', () => {
         });
     });
 
-    xdescribe('#getPromiseFinishAllItems', () => {
+    describe('#getPromiseFinishAllItems', () => {
         it('rejects promise if there is no launch for tempId', (done) => {
             client.getPromiseFinishAllItems(UNEXISTENT_TEMP_LAUNCH_ID).catch((error) => {
                 expect(error instanceof Error).toBeTruthy();
