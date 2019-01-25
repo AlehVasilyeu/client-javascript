@@ -188,7 +188,8 @@ describe('ReportPortal javascript client', () => {
         client.tree.items[TEMP_LAUNCH_ID] = {
             id: TEMP_LAUNCH_ID,
             realId: REAL_LAUNCH_ID,
-            childrens: [TEMP_SUITE_ID],
+            children: [TEMP_SUITE_ID],
+            childrens: [TEMP_SUITE_ID], // todo drop it
             finishSend: false,
             active: false,
         };
@@ -197,7 +198,8 @@ describe('ReportPortal javascript client', () => {
         client.tree.items[TEMP_SUITE_ID] = {
             id: TEMP_SUITE_ID,
             realId: REAL_SUITE_ID,
-            childrens: [TEMP_STEP_ID],
+            children: [TEMP_STEP_ID],
+            childrens: [TEMP_STEP_ID], // todo drop it
             finishSend: false,
             active: false,
         };
@@ -206,7 +208,8 @@ describe('ReportPortal javascript client', () => {
         client.tree.items[TEMP_STEP_ID] = {
             id: TEMP_STEP_ID,
             realId: REAL_STEP_ID,
-            childrens: [TEMP_LOG_ID],
+            children: [TEMP_LOG_ID],
+            childrens: [TEMP_LOG_ID], // todo drop it
             finishSend: false,
             active: false,
         };
@@ -215,7 +218,8 @@ describe('ReportPortal javascript client', () => {
         client.tree.items[TEMP_LOG_ID] = {
             id: TEMP_LOG_ID,
             realId: REAL_LOG_ID,
-            childrens: [],
+            children: [],
+            childrens: [], // todo drop it
             finishSend: true,
             active: false,
         };
@@ -581,7 +585,7 @@ describe('ReportPortal javascript client', () => {
         });
     });
 
-    xdescribe('#startTestItem', () => {
+    describe('#startTestItem', () => {
         it('returns object with promise and tempId', (done) => {
             const testItemObject = client.startTestItem({}, TEMP_LAUNCH_ID, TEMP_SUITE_ID);
 
@@ -632,7 +636,7 @@ describe('ReportPortal javascript client', () => {
         });
 
         it('rejects promise with error if launch is finished', (done) => {
-            client.map[TEMP_LAUNCH_ID].finishSend = true;
+            client.tree.getItem(TEMP_LAUNCH_ID).finishSend = true;
 
             const stepData = copy({}, STEP_DATA);
 
