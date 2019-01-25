@@ -28,7 +28,10 @@ const launchObj = rpClient.startLaunch({
     tags: ['your', 'tags'],
 });
 
-launchObj.promise
+// launchObj;
+
+Promise.resolve()
+    // launchObj.promise
     // update existing launch with new info
     .then(() => {
         rpClient.updateLaunch(launchObj.tempId, {
@@ -36,7 +39,7 @@ launchObj.promise
             tags: ['test', 'tag'],
         });
         // we are waiting till all are actions completed
-        return rpClient.getPromiseFinishAllItems(launchObj.tempId);
+        // return rpClient.getPromiseFinishAllItems(launchObj.tempId);
     })
     // add suites to existing launch
     .then(() => {
@@ -52,7 +55,7 @@ launchObj.promise
             );
             tempSuiteIds.push(suiteObj.tempId);
         }
-        return rpClient.getPromiseFinishAllItems(launchObj.tempId);
+        // return rpClient.getPromiseFinishAllItems(launchObj.tempId);
     })
     // add steps to suites
     .then(() => {
@@ -71,56 +74,58 @@ launchObj.promise
                 tempStepIds.push(stepObj.tempId);
             }
         });
-        return rpClient.getPromiseFinishAllItems(launchObj.tempId);
+        // return rpClient.getPromiseFinishAllItems(launchObj.tempId);
     })
     // add logs and attachments to the steps
-    .then(() => {
-        tempStepIds.forEach((tempStepId) => {
-            for (let i = 0; i < 2; i += 1) {
-                rpClient.sendLog(
-                    tempStepId,
-                    {
-                        level: 'INFO',
-                        message: uniqid(),
-                        time: rpClient.helpers.now(),
-                    },
-                );
-                rpClient.sendLogWithFile(
-                    tempStepId,
-                    {
-                        level: 'INFO',
-                        message: uniqid(),
-                        time: rpClient.helpers.now(),
-                    },
-                    {
-                        name: uniqid(),
-                        type: 'image/png',
-                        content: screenshot,
-                    },
-                );
-            }
-        });
-        return rpClient.getPromiseFinishAllItems(launchObj.tempId);
-    })
+    // .then(() => {
+    //     tempStepIds.forEach((tempStepId) => {
+    //         for (let i = 0; i < 2; i += 1) {
+    //             rpClient.sendLog(
+    //                 tempStepId,
+    //                 {
+    //                     level: 'INFO',
+    //                     message: uniqid(),
+    //                     time: rpClient.helpers.now(),
+    //                 },
+    //             );
+    //             rpClient.sendLogWithFile(
+    //                 tempStepId,
+    //                 {
+    //                     level: 'INFO',
+    //                     message: uniqid(),
+    //                     time: rpClient.helpers.now(),
+    //                 },
+    //                 {
+    //                     name: uniqid(),
+    //                     type: 'image/png',
+    //                     content: screenshot,
+    //                 },
+    //             );
+    //         }
+    //     });
+    //     return rpClient.getPromiseFinishAllItems(launchObj.tempId);
+    // })
     // mark as failed all steps
-    .then(() => Promise
-        .all(tempStepIds.map(tempStepId =>
+    .then(() => {
+        tempStepIds.map(tempStepId =>
             rpClient.finishTestItem(
                 tempStepId,
                 {
                     end_time: rpClient.helpers.now(),
                     status: 'failed',
                 },
-            ).promise)))
+            ).promise);
+    })
     // mark as passed all suites, only in that order
-    .then(() => Promise
-        .all(tempSuiteIds.map(tempSuiteId => rpClient.finishTestItem(
+    .then(() => {
+        tempSuiteIds.map(tempSuiteId => rpClient.finishTestItem(
             tempSuiteId,
             {
                 end_time: rpClient.helpers.now(),
                 status: 'passed',
             },
-        ).promise)))
+        ).promise);
+    })
     // finish launch
     .then(() => rpClient.finishLaunch(
         launchObj.tempId,
