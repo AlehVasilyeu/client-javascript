@@ -8,6 +8,7 @@ const screenshot = fs.readFileSync('./screenshot.b64', { encoding: 'utf-8' });
 const rpClient = new RPClient(config);
 
 const tempSuiteIds = [];
+const nestedTempSuiteIds = [];
 const tempStepIds = [];
 
 // Finalization of test launch should be in reverse order.
@@ -56,9 +57,27 @@ Promise.resolve()
             tempSuiteIds.push(suiteObj.tempId);
         }
     })
-    // add steps to suites
+    // add nested suites
     .then(() => {
         tempSuiteIds.forEach((tempSuiteId) => {
+            for (let i = 0; i < 2; i += 1) {
+                const nestedSuiteObj = rpClient.startTestItem(
+                    {
+                        description: uniqid(),
+                        name: `NESTED ${uniqid()}`,
+                        start_time: rpClient.helpers.now(),
+                        type: 'SUITE',
+                    },
+                    launchObj.tempId,
+                    tempSuiteId,
+                );
+                nestedTempSuiteIds.push(nestedSuiteObj.tempId);
+            }
+        });
+    })
+    // add steps to suites
+    .then(() => {
+        nestedTempSuiteIds.forEach((nestedTempSuiteId) => {
             for (let i = 0; i < 10; i += 1) {
                 const stepObj = rpClient.startTestItem(
                     {
@@ -68,12 +87,13 @@ Promise.resolve()
                         type: 'STEP',
                     },
                     launchObj.tempId,
-                    tempSuiteId,
+                    nestedTempSuiteId,
                 );
                 tempStepIds.push(stepObj.tempId);
             }
         });
     })
+
     // add logs and attachments to the steps
     .then(() => {
         tempStepIds.forEach((tempStepId) => {
@@ -113,7 +133,16 @@ Promise.resolve()
                 },
             ).promise);
     })
-    // // mark as passed all suites, only in that order
+    // mark as passed all suites, only in that order
+    .then(() => {
+        nestedTempSuiteIds.map(nestedTempSuiteId => rpClient.finishTestItem(
+            nestedTempSuiteId,
+            {
+                end_time: rpClient.helpers.now(),
+                status: 'passed',
+            },
+        ).promise);
+    })
     .then(() => {
         tempSuiteIds.map(tempSuiteId => rpClient.finishTestItem(
             tempSuiteId,
