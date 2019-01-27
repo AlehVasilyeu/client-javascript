@@ -78,7 +78,7 @@ Promise.resolve()
     // add steps to suites
     .then(() => {
         nestedTempSuiteIds.forEach((nestedTempSuiteId) => {
-            for (let i = 0; i < 10; i += 1) {
+            for (let i = 0; i < 2; i += 1) {
                 const stepObj = rpClient.startTestItem(
                     {
                         description: uniqid(),
