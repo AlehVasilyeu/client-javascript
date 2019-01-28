@@ -410,7 +410,7 @@ describe('ReportPortal javascript client', () => {
         });
     });
 
-    xdescribe('#finishLaunch', () => {
+    describe('#finishLaunch', () => {
         it('returns object with promise and tempId', (done) => {
             const launchObject = client.finishLaunch(TEMP_LAUNCH_ID);
 
@@ -442,7 +442,7 @@ describe('ReportPortal javascript client', () => {
         it('rejects promise with error if launch was not found by tempId', (done) => {
             client.finishLaunch(UNEXISTENT_TEMP_LAUNCH_ID).promise.catch((error) => {
                 expect(error instanceof Error).toBeTruthy();
-                expect(error.message).toMatch(`Launch "${UNEXISTENT_TEMP_LAUNCH_ID}" not found`);
+                expect(error.message).toMatch(`Item "${UNEXISTENT_TEMP_LAUNCH_ID}" not found`);
                 done();
             });
         });
