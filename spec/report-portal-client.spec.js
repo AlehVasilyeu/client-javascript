@@ -266,8 +266,8 @@ describe('ReportPortal javascript client', () => {
         });
     });
 
-    xdescribe('#cleanMap', () => {
-        it('removes all specified items from "map"', () => {
+    describe('#cleanMap', () => {
+        xit('removes all specified items from "map"', () => {
             client.cleanMap([
                 TEMP_LAUNCH_ID,
                 TEMP_SUITE_ID,
