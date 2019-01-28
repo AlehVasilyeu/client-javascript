@@ -688,7 +688,7 @@ describe('ReportPortal javascript client', () => {
         });
     });
 
-    xdescribe('#saveLog', () => {
+    describe('#saveLog', () => {
         it('returns object with promise and tempId', (done) => {
             const logItemObject = client.saveLog(TEMP_STEP_ID, () => Promise.resolve());
             // todo check that old tempId is returned
@@ -722,7 +722,7 @@ describe('ReportPortal javascript client', () => {
 
             client.saveLog(UNEXISTENT_TEMP_STEP_ID, promiseFunction).promise.catch((error) => {
                 expect(error instanceof Error).toBeTruthy();
-                expect(error.message).toMatch(`Item "${UNEXISTENT_TEMP_STEP_ID}" not found`);
+                expect(error.message).toMatch(`There is no such parent element with id "${UNEXISTENT_TEMP_STEP_ID}"`);
 
                 done();
             });

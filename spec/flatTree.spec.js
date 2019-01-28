@@ -148,7 +148,7 @@ describe('Tree', () => {
             const parentId = '321';
 
             expect(() => tree.addItem({}, parentId))
-                .toThrowError(Error, `There is no such parent element with id ${parentId}`);
+                .toThrowError(Error, `There is no such parent element with id "${parentId}"`);
         });
     });
 
