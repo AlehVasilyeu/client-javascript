@@ -636,7 +636,7 @@ describe('ReportPortal javascript client', () => {
         });
     });
 
-    xdescribe('#finishTestItem', () => {
+    describe('#finishTestItem', () => {
         it('returns object with promise and tempId', (done) => {
             const testItemObject = client.finishTestItem(TEMP_SUITE_ID, {});
 
